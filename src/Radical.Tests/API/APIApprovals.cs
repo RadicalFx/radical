@@ -16,7 +16,10 @@ namespace Radical.Tests.API
         [UseReporter(typeof(DiffReporter))]
         public void Approve_API()
         {
-            var publicApi = ApiGenerator.GeneratePublicApi(typeof(IMessageBroker).Assembly, options: null);
+            var publicApi = ApiGenerator.GeneratePublicApi(typeof(IMessageBroker).Assembly, options: new ApiGeneratorOptions
+            {
+                ExcludeAttributes = new[] { "System.Runtime.Versioning.TargetFrameworkAttribute", "System.Reflection.AssemblyMetadataAttribute" }
+            });
 
             Approvals.Verify(publicApi);
         }

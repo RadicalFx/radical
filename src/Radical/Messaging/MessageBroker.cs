@@ -59,6 +59,7 @@ namespace Radical.Messaging
         /// </summary>
         /// <param name="dispatcher">The dispatcher.</param>
         /// <param name="factory">The factory.</param>
+        [Obsolete("Constructing a message broker with a task factory is deprecated.", error: false)]
         public MessageBroker(IDispatcher dispatcher, TaskFactory factory)
         {
             Ensure.That(dispatcher).Named("dispatcher").IsNotNull();
@@ -115,6 +116,7 @@ namespace Radical.Messaging
         /// <typeparam name="T">The type of message the subecriber is interested in.</typeparam>
         /// <param name="subscriber">The subscriber.</param>
         /// <param name="callback">The callback.</param>
+        [Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed in v4.", error: false)]
         public void Subscribe<T>(object subscriber, Action<object, T> callback)
         {
             Subscribe<T>(subscriber, InvocationModel.Default, callback);
@@ -129,6 +131,7 @@ namespace Radical.Messaging
         /// <param name="subscriber">The subscriber.</param>
         /// <param name="sender">The sender filter.</param>
         /// <param name="callback">The callback.</param>
+        [Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed in v4.", error: false)]
         public void Subscribe<T>(object subscriber, object sender, Action<object, T> callback)
         {
             Subscribe<T>(subscriber, sender, InvocationModel.Default, callback);
@@ -141,6 +144,7 @@ namespace Radical.Messaging
         /// <param name="subscriber">The subscriber.</param>
         /// <param name="messageType">Type of the message.</param>
         /// <param name="callback">The callback.</param>
+        [Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed in v4.", error: false)]
         public void Subscribe(object subscriber, Type messageType, Action<object, object> callback)
         {
             Subscribe(subscriber, messageType, InvocationModel.Default, callback);
@@ -155,6 +159,7 @@ namespace Radical.Messaging
         /// <param name="sender">The sender filter.</param>
         /// <param name="messageType">Type of the message.</param>
         /// <param name="callback">The callback.</param>
+        [Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed in v4.", error: false)]
         public void Subscribe(object subscriber, object sender, Type messageType, Action<object, object> callback)
         {
             Subscribe(subscriber, sender, messageType, InvocationModel.Default, callback);
@@ -168,6 +173,7 @@ namespace Radical.Messaging
         /// <param name="subscriber">The subscriber.</param>
         /// <param name="invocationModel">The invocation model.</param>
         /// <param name="callback">The callback.</param>
+        [Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed in v4.", error: false)]
         public void Subscribe<T>(object subscriber, InvocationModel invocationModel, Action<object, T> callback)
         {
             Subscribe<T>(subscriber, invocationModel, (s, msg) => true, callback);
@@ -181,6 +187,7 @@ namespace Radical.Messaging
         /// <param name="messageType">Type of the message.</param>
         /// <param name="invocationModel">The invocation model.</param>
         /// <param name="callback">The callback.</param>
+        [Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed in v4.", error: false)]
         public void Subscribe(object subscriber, Type messageType, InvocationModel invocationModel, Action<object, object> callback)
         {
             Subscribe(subscriber, messageType, invocationModel, (s, msg) => true, callback);
@@ -196,6 +203,7 @@ namespace Radical.Messaging
         /// <param name="messageType">Type of the message.</param>
         /// <param name="invocationModel">The invocation model.</param>
         /// <param name="callback">The callback.</param>
+        [Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed in v4.", error: false)]
         public void Subscribe(object subscriber, object sender, Type messageType, InvocationModel invocationModel, Action<object, object> callback)
         {
             Subscribe(subscriber, sender, messageType, invocationModel, (s, msg) => true, callback);
@@ -211,6 +219,7 @@ namespace Radical.Messaging
         /// <param name="sender">The sender filter.</param>
         /// <param name="invocationModel">The invocation model.</param>
         /// <param name="callback">The callback.</param>
+        [Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed in v4.", error: false)]
         public void Subscribe<T>(object subscriber, object sender, InvocationModel invocationModel, Action<object, T> callback)
         {
             Subscribe<T>(subscriber, sender, invocationModel, (s, msg) => true, callback);
@@ -460,6 +469,7 @@ namespace Radical.Messaging
             }
         }
 
+        [Obsolete("Dispatch is deprecated. Use BroadcastAsync. It will be treated as an error in v3 and removed in v4.", error: false)]
         public void Dispatch(object sender, object message)
         {
             Ensure.That(sender).Named(() => sender).IsNotNull();
@@ -492,6 +502,7 @@ namespace Radical.Messaging
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="message">The message.</param>
+        [Obsolete("Broadcast is deprecated. Use BroadcastAsync. It will be treated as an error in v3 and removed in v4.", error: false)]
         public void Broadcast(object sender, object message)
         {
             Ensure.That(message).Named(() => message).IsNotNull();
@@ -603,6 +614,7 @@ namespace Radical.Messaging
         /// <param name="messageType">Type of the message.</param>
         /// <param name="callbackFilter">The filter invoked to determine if the callback shopuld be invoked.</param>
         /// <param name="callback">The callback.</param>
+        [Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed in v4.", error: false)]
         public void Subscribe(object subscriber, object sender, Type messageType, Func<object, object, bool> callbackFilter, Action<object, object> callback)
         {
             Subscribe(subscriber, sender, messageType, InvocationModel.Default, callbackFilter, callback);
@@ -619,6 +631,7 @@ namespace Radical.Messaging
         /// <param name="invocationModel">The invocation model.</param>
         /// <param name="callbackFilter">The filter invoked to determine if the callback shopuld be invoked.</param>
         /// <param name="callback">The callback.</param>
+        [Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed in v4.", error: false)]
         public void Subscribe(object subscriber, object sender, Type messageType, InvocationModel invocationModel, Func<object, object, bool> callbackFilter, Action<object, object> callback)
         {
             Ensure.That(subscriber).Named(() => subscriber).IsNotNull();
@@ -640,6 +653,7 @@ namespace Radical.Messaging
         /// <param name="messageType">Type of the message.</param>
         /// <param name="callbackFilter">The filter invoked to determine if the callback shopuld be invoked.</param>
         /// <param name="callback">The callback.</param>
+        [Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed in v4.", error: false)]
         public void Subscribe(object subscriber, Type messageType, Func<object, object, bool> callbackFilter, Action<object, object> callback)
         {
             Subscribe(subscriber, messageType, InvocationModel.Default, callbackFilter, callback);
@@ -654,6 +668,7 @@ namespace Radical.Messaging
         /// <param name="invocationModel">The invocation model.</param>
         /// <param name="callbackFilter">The filter invoked to determine if the callback shopuld be invoked.</param>
         /// <param name="callback">The callback.</param>
+        [Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed in v4.", error: false)]
         public void Subscribe(object subscriber, Type messageType, InvocationModel invocationModel, Func<object, object, bool> callbackFilter, Action<object, object> callback)
         {
             Ensure.That(subscriber).Named(() => subscriber).IsNotNull();
@@ -674,6 +689,7 @@ namespace Radical.Messaging
         /// <param name="subscriber">The subscriber.</param>
         /// <param name="callbackFilter">The filter invoked to determine if the callback shopuld be invoked.</param>
         /// <param name="callback">The callback.</param>
+        [Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed in v4.", error: false)]
         public void Subscribe<T>(object subscriber, Func<object, T, bool> callbackFilter, Action<object, T> callback)
         {
             Subscribe<T>(subscriber, InvocationModel.Default, callbackFilter, callback);
@@ -689,6 +705,7 @@ namespace Radical.Messaging
         /// <param name="sender">The sender filter.</param>
         /// <param name="callbackFilter">The filter invoked to determine if the callback shopuld be invoked.</param>
         /// <param name="callback">The callback.</param>
+        [Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed in v4.", error: false)]
         public void Subscribe<T>(object subscriber, object sender, Func<object, T, bool> callbackFilter, Action<object, T> callback)
         {
             Subscribe<T>(subscriber, sender, InvocationModel.Default, callbackFilter, callback);
@@ -705,6 +722,7 @@ namespace Radical.Messaging
         /// <param name="invocationModel">The invocation model.</param>
         /// <param name="callbackFilter">The filter invoked to determine if the callback shopuld be invoked.</param>
         /// <param name="callback">The callback.</param>
+        [Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed in v4.", error: false)]
         public void Subscribe<T>(object subscriber, object sender, InvocationModel invocationModel, Func<object, T, bool> callbackFilter, Action<object, T> callback)
         {
             Ensure.That(subscriber).Named(() => subscriber).IsNotNull();
@@ -726,6 +744,7 @@ namespace Radical.Messaging
         /// <param name="invocationModel">The invocation model.</param>
         /// <param name="callbackFilter">The filter invoked to determine if the callback shopuld be invoked.</param>
         /// <param name="callback">The callback.</param>
+        [Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed in v4.", error: false)]
         public void Subscribe<T>(object subscriber, InvocationModel invocationModel, Func<object, T, bool> callbackFilter, Action<object, T> callback)
         {
             Ensure.That(subscriber).Named(() => subscriber).IsNotNull();

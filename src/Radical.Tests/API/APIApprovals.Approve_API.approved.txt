@@ -2,7 +2,6 @@
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Radical.Tests")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: System.Runtime.InteropServices.Guid("ac1104e2-8764-42ea-80aa-bfd22bc6a89f")]
-[assembly: System.Runtime.Versioning.TargetFramework(".NETStandard,Version=v2.0", FrameworkDisplayName="")]
 namespace Radical
 {
     public sealed class ActionTextWriter : System.IO.TextWriter
@@ -926,26 +925,78 @@ namespace Radical.ComponentModel.Messaging
     }
     public interface IMessageBroker
     {
+        [System.Obsolete("Broadcast is deprecated. Use BroadcastAsync. It will be treated as an error in v3" +
+            " and removed in v4.", false)]
         void Broadcast(object sender, object message);
         System.Threading.Tasks.Task BroadcastAsync(object sender, object message);
+        [System.Obsolete("Dispatch is deprecated. Use BroadcastAsync. It will be treated as an error in v3 " +
+            "and removed in v4.", false)]
         void Dispatch(object sender, object message);
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         void Subscribe(object subscriber, System.Type messageType, System.Action<object, object> callback);
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         void Subscribe(object subscriber, object sender, System.Type messageType, System.Action<object, object> callback);
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         void Subscribe(object subscriber, System.Type messageType, Radical.ComponentModel.Messaging.InvocationModel invocationModel, System.Action<object, object> callback);
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         void Subscribe(object subscriber, System.Type messageType, System.Func<object, object, bool> callbackFilter, System.Action<object, object> callback);
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         void Subscribe(object subscriber, object sender, System.Type messageType, Radical.ComponentModel.Messaging.InvocationModel invocationModel, System.Action<object, object> callback);
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         void Subscribe(object subscriber, object sender, System.Type messageType, System.Func<object, object, bool> callbackFilter, System.Action<object, object> callback);
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         void Subscribe(object subscriber, System.Type messageType, Radical.ComponentModel.Messaging.InvocationModel invocationModel, System.Func<object, object, bool> callbackFilter, System.Action<object, object> callback);
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         void Subscribe(object subscriber, object sender, System.Type messageType, Radical.ComponentModel.Messaging.InvocationModel invocationModel, System.Func<object, object, bool> callbackFilter, System.Action<object, object> callback);
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         void Subscribe<T>(object subscriber, System.Action<object, T> callback);
         void Subscribe<T>(object subscriber, System.Func<object, T, System.Threading.Tasks.Task> callback);
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         void Subscribe<T>(object subscriber, Radical.ComponentModel.Messaging.InvocationModel invocationModel, System.Action<object, T> callback);
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         void Subscribe<T>(object subscriber, System.Func<object, T, bool> callbackFilter, System.Action<object, T> callback);
         void Subscribe<T>(object subscriber, System.Func<object, T, System.Threading.Tasks.Task<bool>> callbackFilter, System.Func<object, T, System.Threading.Tasks.Task> callback);
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         void Subscribe<T>(object subscriber, object sender, System.Action<object, T> callback);
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         void Subscribe<T>(object subscriber, Radical.ComponentModel.Messaging.InvocationModel invocationModel, System.Func<object, T, bool> callbackFilter, System.Action<object, T> callback);
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         void Subscribe<T>(object subscriber, object sender, Radical.ComponentModel.Messaging.InvocationModel invocationModel, System.Action<object, T> callback);
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         void Subscribe<T>(object subscriber, object sender, System.Func<object, T, bool> callbackFilter, System.Action<object, T> callback);
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         void Subscribe<T>(object subscriber, object sender, Radical.ComponentModel.Messaging.InvocationModel invocationModel, System.Func<object, T, bool> callbackFilter, System.Action<object, T> callback);
         void Unsubscribe(object subscriber);
         void Unsubscribe(object subscriber, object sender);
@@ -1178,27 +1229,80 @@ namespace Radical.Messaging
     public class MessageBroker : Radical.ComponentModel.Messaging.IMessageBroker
     {
         public MessageBroker(Radical.ComponentModel.IDispatcher dispatcher) { }
+        [System.Obsolete("Constructing a message broker with a task factory is deprecated.", false)]
         public MessageBroker(Radical.ComponentModel.IDispatcher dispatcher, System.Threading.Tasks.TaskFactory factory) { }
+        [System.Obsolete("Broadcast is deprecated. Use BroadcastAsync. It will be treated as an error in v3" +
+            " and removed in v4.", false)]
         public void Broadcast(object sender, object message) { }
         public System.Threading.Tasks.Task BroadcastAsync(object sender, object message) { }
+        [System.Obsolete("Dispatch is deprecated. Use BroadcastAsync. It will be treated as an error in v3 " +
+            "and removed in v4.", false)]
         public void Dispatch(object sender, object message) { }
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         public void Subscribe(object subscriber, System.Type messageType, System.Action<object, object> callback) { }
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         public void Subscribe(object subscriber, object sender, System.Type messageType, System.Action<object, object> callback) { }
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         public void Subscribe(object subscriber, System.Type messageType, Radical.ComponentModel.Messaging.InvocationModel invocationModel, System.Action<object, object> callback) { }
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         public void Subscribe(object subscriber, System.Type messageType, System.Func<object, object, bool> callbackFilter, System.Action<object, object> callback) { }
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         public void Subscribe(object subscriber, object sender, System.Type messageType, Radical.ComponentModel.Messaging.InvocationModel invocationModel, System.Action<object, object> callback) { }
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         public void Subscribe(object subscriber, object sender, System.Type messageType, System.Func<object, object, bool> callbackFilter, System.Action<object, object> callback) { }
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         public void Subscribe(object subscriber, System.Type messageType, Radical.ComponentModel.Messaging.InvocationModel invocationModel, System.Func<object, object, bool> callbackFilter, System.Action<object, object> callback) { }
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         public void Subscribe(object subscriber, object sender, System.Type messageType, Radical.ComponentModel.Messaging.InvocationModel invocationModel, System.Func<object, object, bool> callbackFilter, System.Action<object, object> callback) { }
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         public void Subscribe<T>(object subscriber, System.Action<object, T> callback) { }
         public void Subscribe<T>(object subscriber, System.Func<object, T, System.Threading.Tasks.Task> callback) { }
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         public void Subscribe<T>(object subscriber, Radical.ComponentModel.Messaging.InvocationModel invocationModel, System.Action<object, T> callback) { }
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         public void Subscribe<T>(object subscriber, System.Func<object, T, bool> callbackFilter, System.Action<object, T> callback) { }
         public void Subscribe<T>(object subscriber, System.Func<object, T, System.Threading.Tasks.Task<bool>> callbackFilter, System.Func<object, T, System.Threading.Tasks.Task> callback) { }
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         public void Subscribe<T>(object subscriber, object sender, System.Action<object, T> callback) { }
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         public void Subscribe<T>(object subscriber, Radical.ComponentModel.Messaging.InvocationModel invocationModel, System.Func<object, T, bool> callbackFilter, System.Action<object, T> callback) { }
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         public void Subscribe<T>(object subscriber, object sender, Radical.ComponentModel.Messaging.InvocationModel invocationModel, System.Action<object, T> callback) { }
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         public void Subscribe<T>(object subscriber, object sender, System.Func<object, T, bool> callbackFilter, System.Action<object, T> callback) { }
+        [System.Obsolete("The synchronous version of Subscribe is deprecated. Use the overload that accepts" +
+            " a Func<obect, TMessage, Task>. It will be treated as an error in v3 and removed" +
+            " in v4.", false)]
         public void Subscribe<T>(object subscriber, object sender, Radical.ComponentModel.Messaging.InvocationModel invocationModel, System.Func<object, T, bool> callbackFilter, System.Action<object, T> callback) { }
         public void Unsubscribe(object subscriber) { }
         public void Unsubscribe(object subscriber, object sender) { }

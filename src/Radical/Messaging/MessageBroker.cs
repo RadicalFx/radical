@@ -24,19 +24,18 @@ namespace Radical.Messaging
             public SubscriptionsContainer(Type messageType)
             {
                 MessageType = messageType;
-                Subscriptions = new List<ISubscription>();
             }
 
             public Type MessageType { get; private set; }
 
-            public List<ISubscription> Subscriptions { get; private set; }
+            public List<IAsyncSubscription> Subscriptions { get; } = new();
         }
 
         static readonly TraceSource logger = new TraceSource(typeof(MessageBroker).FullName);
         
         readonly IDispatcher dispatcher;
 
-        readonly List<SubscriptionsContainer> msgSubsIndex = null;
+        readonly List<SubscriptionsContainer> msgSubsIndex = new();
         readonly ReaderWriterLockSlim msgSubsIndexLock = new ReaderWriterLockSlim();
 
         /// <summary>
@@ -48,7 +47,6 @@ namespace Radical.Messaging
             Ensure.That(dispatcher).Named("dispatcher").IsNotNull();
 
             this.dispatcher = dispatcher;
-            msgSubsIndex = new List<SubscriptionsContainer>();
         }
 
         /// <summary>
@@ -62,7 +60,7 @@ namespace Radical.Messaging
             throw new NotSupportedException();
         }
 
-        void SubscribeCore(Type messageType, ISubscription subscription)
+        void SubscribeCore(Type messageType, IAsyncSubscription subscription)
         {
             msgSubsIndexLock.EnterUpgradeableReadLock();
             try
@@ -440,7 +438,7 @@ namespace Radical.Messaging
             }
         }
 
-        IEnumerable<ISubscription> GetSubscriptionsFor(Type messageType, object sender)
+        IEnumerable<IAsyncSubscription> GetSubscriptionsFor(Type messageType, object sender)
         {
             msgSubsIndexLock.EnterReadLock();
             try
@@ -480,7 +478,7 @@ namespace Radical.Messaging
         }
 
         /// <summary>
-        /// Broadcasts the specified message in an asynchronus manner without
+        /// Broadcasts the specified message in an asynchronus manner
         /// waiting for the execution of the subscribers.
         /// </summary>
         /// <param name="sender">The sender.</param>
@@ -500,23 +498,21 @@ namespace Radical.Messaging
             var tasks = new List<Task>();
             if (subscriptions.Any())
             {
-                subscriptions
-                    .Where(sub => sub.ShouldInvoke(sender, message))
-                    .ForEach(sub =>
+                subscriptions.ForEach(sub =>
+                {
+                    var t = sub.ShouldInvokeAsync(sender, message);
+                    t.ContinueWith(allow =>
                     {
-                        var _as = sub as IAsyncSubscription;
-                        if (_as != null)
+                        if (allow.Result)
                         {
-                            tasks.Add(_as.InvokeAsync(sender, message));
+                            return sub.InvokeAsync(sender, message);
                         }
-                        else
-                        {
-                            tasks.Add(factory.StartNew(() =>
-                            {
-                                sub.Invoke(sender, message);
-                            }, TaskCreationOptions.LongRunning));
-                        }
-                    });
+
+                        return Task.CompletedTask;
+                    }, TaskScheduler.Current);
+
+                    tasks.Add(t);
+                });
 
             }
 

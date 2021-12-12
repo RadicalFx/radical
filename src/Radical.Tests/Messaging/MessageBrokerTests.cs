@@ -6,6 +6,7 @@ using SharpTestsEx;
 using System;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Radical.Tests.Windows.Messaging
 {
@@ -372,35 +373,36 @@ namespace Radical.Tests.Windows.Messaging
 
         [TestMethod]
         [TestCategory("MessageBroker")]
-        public void messageBroker_POCO_should_respect_should_handle_predicate()
+        public async Task messageBroker_POCO_should_respect_should_handle_predicate()
         {
             bool actual = false;
 
             var dispatcher = new NullDispatcher();
             var broker = new MessageBroker(dispatcher);
 
-            broker.Subscribe<PocoTestMessage>(this, (s, msg) => false, (s, msg) =>
+            broker.Subscribe<PocoTestMessage>(this, (s, msg) => Task.FromResult(false), (s, msg) =>
             {
                 actual = true;
+                return Task.CompletedTask;
             });
 
-            broker.Dispatch(this, new PocoTestMessage());
+            await broker.BroadcastAsync(this, new PocoTestMessage());
 
             Assert.IsFalse(actual);
         }
 
         [TestMethod]
         [TestCategory("MessageBroker")]
-        //BUG: https://github.com/RadicalFx/Radical/issues/241
+        //BUG - Fix for: https://github.com/RadicalFx/Radical/issues/241
         public void messageBroker_should_allow_POCO_subscriptions_and_not_IMessage_ones()
         {
             var dispatcher = new NullDispatcher();
             var broker = new MessageBroker(dispatcher);
 
-            broker.Subscribe(this, this, typeof(PocoTestMessage), InvocationModel.Default, (s, msg) => false,
+            broker.Subscribe<PocoTestMessage>(this, (s, msg) => Task.FromResult(false),
                 (s, msg) =>
                 {
-                    /* NOP */
+                    return Task.CompletedTask;
                 });
         }
     }

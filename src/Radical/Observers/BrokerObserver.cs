@@ -1,6 +1,7 @@
 ﻿using Radical.ComponentModel.Messaging;
 using Radical.Validation;
 using System;
+using System.Threading.Tasks;
 
 namespace Radical.Observers
 {
@@ -48,7 +49,7 @@ namespace Radical.Observers
         /// <returns>This monitor instance.</returns>
         public MessageBrokerMonitor WaitingFor<TMessage>() where TMessage : class
         {
-            return WaitingFor<TMessage>(m => true);
+            return WaitingFor<TMessage>(m => Task.FromResult(true));
         }
 
         /// <summary>
@@ -70,6 +71,7 @@ namespace Radical.Observers
         /// <typeparam name="TMessage">The type of the message.</typeparam>
         /// <param name="filter">The filter condition.</param>
         /// <returns>This monitor instance.</returns>
+        [Obsolete("The synchronous version of WaitingFor is deprecated. Use the overload that accepts a Func<TMessage, Task<bool>>. It will be treated as an error in v3 and removed in v4.", error: false)]
         public MessageBrokerMonitor WaitingFor<TMessage>(Func<TMessage, bool> filter) where TMessage : class
         {
             broker.Subscribe<TMessage>(this, (sender, msg) =>
@@ -89,8 +91,29 @@ namespace Radical.Observers
         /// </summary>
         /// <typeparam name="TMessage">The type of the message.</typeparam>
         /// <param name="filter">The filter condition.</param>
+        /// <returns>This monitor instance.</returns>
+        public MessageBrokerMonitor WaitingFor<TMessage>(Func<TMessage, Task<bool>> filter) where TMessage : class
+        {
+            broker.Subscribe<TMessage>(this, async (sender, msg) =>
+            {
+                if (await filter(msg).ConfigureAwait(false))
+                {
+                    OnChanged();
+                }
+            });
+
+            return this;
+        }
+
+        /// <summary>
+        /// Waits for the specified message type and raise the Changed event 
+        /// if the supplied condition is satisfied by the dispatched or broadcast message.
+        /// </summary>
+        /// <typeparam name="TMessage">The type of the message.</typeparam>
+        /// <param name="filter">The filter condition.</param>
         /// <param name="invocationModel">The invocation model.</param>
         /// <returns>This monitor instance.</returns>
+        [Obsolete("The synchronous version of WaitingFor is deprecated. Use the overload that accepts a Func<TMessage, Task<bool>>. It will be treated as an error in v3 and removed in v4.", error: false)]
         public MessageBrokerMonitor WaitingFor<TMessage>(Func<TMessage, bool> filter, InvocationModel invocationModel) where TMessage : class
         {
             broker.Subscribe<TMessage>(this, invocationModel, (sender, msg) =>
